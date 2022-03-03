@@ -1,4 +1,4 @@
-# Trilogic.Settings.ArgSettings
+# Trilogic.EasyARGS
 A very simple library for parsing command line arguments.
 
 Arguments may take the form:
