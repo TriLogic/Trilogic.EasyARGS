@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Trilogic.EasyARGS
@@ -24,17 +25,18 @@ namespace Trilogic.EasyARGS
         {
             store = storage;
         }
+
+        public ArgSettings(string[] args)
+        {
+            store = new Dictionary<string, ArgSetting>();
+            ParseArgs(args);
+        }
         #endregion
 
         #region Class Properties
         public int Count
         {
             get { return store.Count; }
-        }
-
-        public bool Exists(string key)
-        {
-            return store.ContainsKey(KeyOf(key));
         }
 
         public ArgSetting this[string key]
@@ -67,7 +69,18 @@ namespace Trilogic.EasyARGS
         }
         #endregion
 
-        #region Get, Set, Remove Methods
+        #region Exists, Set, Set, Remove Methods
+        public bool Exists(string key)
+        {
+            return store.ContainsKey(KeyOf(key));
+        }
+
+        public bool Exists(string keyA, string keyB)
+        {
+            return store.ContainsKey(KeyOf(keyA)) ||
+                store.ContainsKey(KeyOf(keyB));
+        }
+
         public ArgSetting Set(ArgSetting setting)
         {
             string key = KeyOf(setting);
@@ -128,7 +141,6 @@ namespace Trilogic.EasyARGS
         {
             string[] arg = new string[2];
 
-
             if (store.Count > 0)
                 store.Clear();
 
@@ -177,23 +189,50 @@ namespace Trilogic.EasyARGS
             if (!Exists(key))
                 throw new ArgException(msg);
         }
-        public void AssertAB(string keyA, string keyB, string msg)
+        public void AssertAnd(string keyA, string keyB, string msg)
         {
             Assert(keyA, msg);
             Assert(keyB, msg);
         }
-        public void AssertAorB(string keyA, string keyB, string msg)
+
+        public void AssertAnd(IEnumerable<string> keys, string msg)
+        {
+            foreach (string key in keys)
+                Assert(key, msg);
+        }
+
+        public void AssertOr(string keyA, string keyB, string msg)
         {
             if (Exists(keyA) || Exists(keyB))
                 return;
             throw new ArgException(msg);
         }
-        public void AssertAxorB(string keyA, string keyB, string msg)
+
+        public void AssertOr(IEnumerable<string> keys, string msg)
+        {
+            foreach (string key in keys)
+                Assert(key, msg);
+        }
+
+        public void AssertXor(string keyA, string keyB, string msg)
         {
             if (Exists(keyA) ^ Exists(keyB))
                 return;
             throw new ArgException(msg);
         }
+        public void AssertXor(IEnumerable<string> keys, string msg)
+        {
+            int found = 0;
+            foreach (string key in keys)
+            {
+                found += Exists(key) ? 1 : 0;
+                if (found > 1)
+                    throw new ArgException(msg);
+            }
+            if (found == 0)
+                throw new ArgException(msg);
+        }
+
         #endregion
     }
 }
