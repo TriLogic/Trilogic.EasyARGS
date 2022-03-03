@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trilogic.EasyARGS", "Trilogic.EasyARGS\Trilogic.EasyARGS.csproj", "{06A1A6DF-3CFA-4C28-93D0-29E6B6564715}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06A1A6DF-3CFA-4C28-93D0-29E6B6564715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A1A6DF-3CFA-4C28-93D0-29E6B6564715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A1A6DF-3CFA-4C28-93D0-29E6B6564715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A1A6DF-3CFA-4C28-93D0-29E6B6564715}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8A1F0D4-30C1-434E-B62E-EEF0DB070246}
+	EndGlobalSection
+EndGlobal
