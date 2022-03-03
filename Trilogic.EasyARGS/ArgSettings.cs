@@ -105,14 +105,6 @@ namespace Trilogic.EasyARGS
             return Set(new ArgSetting(key, value));
         }
 
-        public ArgSetting Get(string key, string defValue)
-        {
-            ArgSetting s = Get(key);
-            if (s != null)
-                return s;
-            return Set(new ArgSetting(key, defValue));
-        }
-
         public ArgSetting Get(string key)
         {
             if (string.IsNullOrEmpty(key))
@@ -121,6 +113,44 @@ namespace Trilogic.EasyARGS
             if (store.ContainsKey(lowkey))
                 return store[lowkey];
             return null;
+        }
+        
+        public ArgSetting Get(string keyA, string keyB)
+        {
+            if (Exists(keyA))
+                return Get(keyA);
+            if (Exists(keyB))
+                return Get(keyB);
+            return null;
+        }
+        
+        public ArgSetting Get(IEnumerable<string> keys)
+        {
+            foreach (string key in keys)
+            {
+                string lowkey = KeyOf(key);
+                if (store.ContainsKey(lowkey))
+                    return store[lowkey];
+            }
+            return null;
+        }
+
+        public string ValueOf(string key, string defValue = null)
+        {
+            var item = Get(key);
+            return item == null ? defValue: item.Value;
+        }
+
+        public string ValueOf(string keyA, string keyB, string defValue = null)
+        {
+            var item = Get(keyA, keyB);
+            return item == null ? defValue: item.Value;
+        }
+
+        public string ValueOf(IEnumerable<string> keys, string defValue = null)
+        {
+            ArgSetting item = Get(keys);
+            return item == null ? defValue : item.Value;
         }
 
         public ArgSetting Remove(string key)
@@ -220,7 +250,9 @@ namespace Trilogic.EasyARGS
         public void AssertOr(IEnumerable<string> keys, string msg)
         {
             foreach (string key in keys)
-                Assert(key, msg);
+                if (Exists(key))
+                    return;
+            throw new ArgException(msg);
         }
 
         public void AssertXor(string keyA, string keyB, string msg)
