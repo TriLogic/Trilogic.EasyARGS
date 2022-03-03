@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "/b /f  /s=C:\\Users\\affriedl\\Desktop\\nfty\\layers /t=."
+    }
+  }
+}

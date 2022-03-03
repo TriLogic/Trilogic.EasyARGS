@@ -81,6 +81,15 @@ namespace Trilogic.EasyARGS
                 store.ContainsKey(KeyOf(keyB));
         }
 
+        public bool Exists(IEnumerable<string> keys)
+        {
+            foreach (string key in keys)
+                if (Exists(key))
+                    return true;
+
+            return false;
+        }
+
         public ArgSetting Set(ArgSetting setting)
         {
             string key = KeyOf(setting);
@@ -167,7 +176,7 @@ namespace Trilogic.EasyARGS
                 {
                     arg[0] = args[i].Substring(0, idx).TrimEnd();
 
-                    if (idx + 1 < args[0].Length)
+                    if (idx + 1 < args[i].Length)
                         arg[1] = args[i].Substring(idx + 1).Trim();
                 }
 
